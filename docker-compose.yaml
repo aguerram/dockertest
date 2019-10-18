@@ -1,0 +1,27 @@
+version: '3'
+services: 
+  service1:
+    image: node:alpine
+    command: sh -c "npm install && npm start"
+    environment: 
+      - NODE_ENV=development
+      - APP_NAME=Service 1
+    ports:
+      - '3000:8000'
+    working_dir: /root/service1
+    depends_on:
+      - service2
+    volumes: 
+      - ./service1:/root/service1 
+  service2:
+    image: node:alpine
+    build: ./service2
+    command: sh -c "npm install && npm start"
+    environment: 
+      - NODE_ENV=development
+      - APP_NAME=Service 2
+    ports:
+      - '3001:8001'
+    working_dir: /root/service2
+    volumes: 
+      - ./service2:/root/service2 
